@@ -74,6 +74,16 @@ function Menu() {
 }
 
 function Footer() {
+  const hour = new Date().getHours();
+  const openHour = 8;
+  const closeHour = 22;
+  const isOpen = hour >= openHour && hour <= closeHour;
+  console.log(isOpen);
+
+  //   if (hour >= openHour && hour <= closeHour) alert("We're currently open!");
+  //   else alert("Sorry we're closed");
+  // we got alert twice because in strict mode our components are usually rendered twice
+
   // return React.createElement('footer', null, "We're currently open!")
   return <footer>{new Date().toLocaleTimeString()}We're currently open</footer>;
 }
