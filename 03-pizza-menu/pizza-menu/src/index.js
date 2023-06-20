@@ -81,13 +81,13 @@ function Menu() {
     <main className="menu">
       <h2>Our menu</h2>
 
-      {numPizzas>0 && (
+      {numPizzas > 0 ? (
         <ul className="pizzas">
           {pizzas.map((pizza) => (
             <Pizza pizzaObj={pizza} key={pizza.name} />
           ))}
         </ul>
-      )}
+      ) : <p>We're still working on our menu. Please come back later :)</p>}
 
       {/* <Pizza
         name="Pizza Spinaci"
