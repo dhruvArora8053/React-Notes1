@@ -87,7 +87,9 @@ function Menu() {
             <Pizza pizzaObj={pizza} key={pizza.name} />
           ))}
         </ul>
-      ) : <p>We're still working on our menu. Please come back later :)</p>}
+      ) : (
+        <p>We're still working on our menu. Please come back later :)</p>
+      )}
 
       {/* <Pizza
         name="Pizza Spinaci"
@@ -108,6 +110,9 @@ function Menu() {
 
 function Pizza(props) {
   console.log(props);
+
+  if (props.pizzaObj.soldOut) return null;
+
   return (
     <li className="pizza">
       <img src={props.pizzaObj.photoName} alt={props.pizzaObj.name} />
@@ -131,15 +136,26 @@ function Footer() {
   //   else alert("Sorry we're closed");
   // we got alert twice because in strict mode our components are usually rendered twice
 
+  // if (!isOpen)
+  //   return (
+  //     <p>
+  //       We're happy to welcome you between {openHour}:00 and {closeHour}:00
+  //     </p>
+  //   );
+
   // return React.createElement('footer', null, "We're currently open!")
   return (
     <footer className="footer">
       {/* {new Date().toLocaleTimeString()}We're currently open */}
-      {isOpen && (
+      {isOpen ? (
         <div className="order">
           <p>We're open until {closeHour}:00. Come visit us or order online</p>
           <button className="btn">Order</button>
         </div>
+      ) : (
+        <p>
+          We're happy to welcome you between {openHour}:00 and {closeHour}:00
+        </p>
       )}
     </footer>
   );
