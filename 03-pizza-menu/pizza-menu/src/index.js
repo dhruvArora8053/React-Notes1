@@ -119,7 +119,7 @@ function Pizza({ pizzaObj }) {
   // console.log(props);
   console.log(pizzaObj);
 
-  // if (pizzaObj.soldOut) return null;
+  //if (pizzaObj.soldOut) return null;
 
   return (
     <li className={`pizza ${pizzaObj.soldOut ? "sold-out" : ""}`}>
@@ -193,9 +193,9 @@ root.render(
     <App />
   </React.StrictMode>
 );
-//React.StrictMode:
+// React.StrictMode:
 //1. it will render our components twice in order to find certain bugs
 //2. it will check if we're using outdate parts of the react API
 
-//React before v18
-//React.render(<App />, document.getElementById("root"))
+// React before v18
+// React.render(<App />, document.getElementById("root"))
