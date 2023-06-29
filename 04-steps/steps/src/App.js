@@ -1,9 +1,22 @@
+import { useState } from "react";
+
 const messages = ["Learn React", "Apply for jobs", "Invest your new income"];
 // this data should be located outside because otherwise each time the App function is executed than this above data will be declared again
 
 export default function App() {
-  const step = 1;
+  // const step = 1;
   //this step here we want to update when we click the previous or next button
+
+  //using states --> 3 steps:
+  //1. we add a new state variable
+  //2. we use it in a code, usually JSX
+  //3. we update the piece of state in some event handler
+
+  // const arr = useState(1);
+  // console.log(arr);
+  //1 is a default value here and the useState function will return an array
+  //as you see in a console this arr has two values, 1st value is the default value that we want for our state and then the 2nd one is a fucntion that we can use to update our state variable, let's do destructuring on it:
+  const [step, setStep] = useState(1);
 
   function handlePrevious() {
     alert("Previous");
