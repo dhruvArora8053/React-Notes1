@@ -5,6 +5,14 @@ export default function App() {
   const step = 1;
   //this step here we want to update when we click the previous or next button
 
+  function handlePrevious() {
+    alert("Previous");
+  }
+
+  function handleNext() {
+    alert("Next");
+  }
+
   return (
     <div className="steps">
       <div className="numbers">
@@ -18,10 +26,21 @@ export default function App() {
       </p>
 
       <div className="buttons">
-        <button style={{ backgroundColor: "#7950f2", color: "#fff" }}>
+        {/* adding listeners */}
+        <button
+          style={{ backgroundColor: "#7950f2", color: "#fff" }}
+          onClick={handlePrevious}
+          //notice here we are just passing the function value so we are not calling it because if we would be calling it then it would get executed immediately
+
+          // onMouseEnter={() => alert("TEST")}
+          //when the App component will be executed it will read the onMouseEnter and just like javascript we provied the callback so this callback function will wait for the event to execute it's functionality
+        >
           Previous
         </button>
-        <button style={{ backgroundColor: "#7950f2", color: "#fff" }}>
+        <button
+          style={{ backgroundColor: "#7950f2", color: "#fff" }}
+          onClick={() => handleNext}
+        >
           Next
         </button>
       </div>
