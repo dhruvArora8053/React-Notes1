@@ -30,13 +30,26 @@ export default function App() {
   // }
 
   function handlePrevious() {
-    if (step > 1) setStep(step - 1);
+    // if (step > 1) setStep(step - 1);
+    //we should not change the state like this  instead:
+
+    if (step > 1) setStep((s) => s - 1);
   }
 
   const [test, setTest] = useState({ name: "Jonas" });
 
   function handleNext() {
-    if (step < 3) setStep(step + 1);
+    if (step < 3) {
+      //this won't work
+      // setStep(step + 1);
+      // setStep(step + 1);
+
+      //instead
+      setStep((s) => s + 1);
+      setStep((s) => s + 1);
+      //now it's updating the next twice
+      //in order to be safe for future updates, it's a good idea to always use a callback like this when we want to update state based on the current value of that state.
+    }
 
     // step = step + 1;
     //and this won't work because the react has no magic way of knowing that this here is the state variable and that this operation is basically updating it and so that's why react provided us with the useState setter function which is a fucnitonal way of updating the state value but without mutating it, because here we are directly mutating the step variable but react is all about immutability and so therefore we can only update the state using the tools that react gives us so in this case the setStep funciton so this setter function is tied to step state variable, so when we use the functional way of updating the state then React does know that this is the state variable that should be updated
@@ -48,8 +61,8 @@ export default function App() {
   }
 
   return (
-    <div>
-      <button className="close" onClick={() => setIsOpen(!isOpen)}>
+    <>
+      <button className="close" onClick={() => setIsOpen((is) => !is)}>
         &times;
       </button>
       {/* by closing and opening we rerendered this component so many time but the react still has the same state of step so react holds state in the memory even though that component has been re-rendered countless times */}
@@ -86,6 +99,6 @@ export default function App() {
           </div>
         </div>
       )}
-    </div>
+    </>
   );
 }
