@@ -58,7 +58,7 @@ function App() {
   );
 }
 
-//we write components in react using funcitons
+//we write components in react using functions
 //function rules-
 //1. needs to start with uppercase
 //2. nees to return some markup

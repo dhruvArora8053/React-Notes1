@@ -16,22 +16,32 @@ export default function App() {
   // console.log(arr);
   //1 is a default value here and the useState function will return an array
   //as you see in a console this arr has two values, 1st value is the default value that we want for our state and then the 2nd one is a fucntion that we can use to update our state variable, let's do destructuring on it:
+
   const [step, setStep] = useState(1);
+  //useState function here is known as hook, use keyword represents hook, hooks are not allowed to call inside of a function or a block, otherwise we would get an error
+
+  // function handlePrevious() {
+  //   alert("Previous");
+  // }
+
+  // function handleNext() {
+  //   alert("Next");
+  // }
 
   function handlePrevious() {
-    alert("Previous");
+    if (step > 1) setStep(step - 1);
   }
 
   function handleNext() {
-    alert("Next");
+    if (step < 3) setStep(step + 1);
   }
 
   return (
     <div className="steps">
       <div className="numbers">
-        <div className={`${step >= 1 ? "active" : ""}`}>1</div>
-        <div className={`${step >= 2 ? "active" : ""}`}>2</div>
-        <div className={`${step >= 3 ? "active" : ""}`}>3</div>
+        <div className={step >= 1 ? "active" : ""}>1</div>
+        <div className={step >= 2 ? "active" : ""}>2</div>
+        <div className={step >= 3 ? "active" : ""}>3</div>
       </div>
 
       <p className="message">
@@ -46,13 +56,13 @@ export default function App() {
           //notice here we are just passing the function value so we are not calling it because if we would be calling it then it would get executed immediately
 
           // onMouseEnter={() => alert("TEST")}
-          //when the App component will be executed it will read the onMouseEnter and just like javascript we provied the callback so this callback function will wait for the event to execute it's functionality
+          //when the App component will be executed it will read the onMouseEnter and just like javascript we provided the callback so this callback function will wait for the event to happen to execute it's functionality
         >
           Previous
         </button>
         <button
           style={{ backgroundColor: "#7950f2", color: "#fff" }}
-          onClick={() => handleNext}
+          onClick={handleNext}
         >
           Next
         </button>
