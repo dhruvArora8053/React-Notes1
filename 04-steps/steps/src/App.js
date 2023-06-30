@@ -32,8 +32,18 @@ export default function App() {
     if (step > 1) setStep(step - 1);
   }
 
+  const [test, setTest] = useState({ name: "Jonas" });
+
   function handleNext() {
     if (step < 3) setStep(step + 1);
+
+    // step = step + 1;
+    //and this won't work because the react has no magic way of knowing that this here is the state variable and that this operation is basically updating it and so that's why react provided us with the useState setter function which is a fucnitonal way of updating the state value but without mutating it, because here we are directly mutating the step variable but react is all about immutability and so therefore we can only update the state using the tools that react gives us so in this case the setStep funciton so this setter function is tied to step state variable, so when we use the functional way of updating the state then React does know that this is the state variable that should be updated
+
+    // BAD PRACTICE
+    // test.name = "Fred";
+    //this will acutally work, so mutating the object like this did actually trigger a new rerender of the component view however, mutating objects like this is a really really bad practice and that's because sometimes in more complex situtations this acutally won't work and in general it's really just a bad practice of mutating objects like this especially in a framework like react which is all about immutability and functional state updates, instead we would do:
+    setTest({ name: "Fred" });
   }
 
   return (
