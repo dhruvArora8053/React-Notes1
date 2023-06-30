@@ -18,6 +18,7 @@ export default function App() {
   //as you see in a console this arr has two values, 1st value is the default value that we want for our state and then the 2nd one is a fucntion that we can use to update our state variable, let's do destructuring on it:
 
   const [step, setStep] = useState(1);
+  const [isOpen, setIsOpen] = useState(true);
   //useState function here is known as hook, use keyword represents hook, hooks are not allowed to call inside of a function or a block, otherwise we would get an error
 
   // function handlePrevious() {
@@ -47,36 +48,44 @@ export default function App() {
   }
 
   return (
-    <div className="steps">
-      <div className="numbers">
-        <div className={step >= 1 ? "active" : ""}>1</div>
-        <div className={step >= 2 ? "active" : ""}>2</div>
-        <div className={step >= 3 ? "active" : ""}>3</div>
-      </div>
+    <div>
+      <button className="close" onClick={() => setIsOpen(!isOpen)}>
+        &times;
+      </button>
+      {/* by closing and opening we rerendered this component so many time but the react still has the same state of step so react holds state in the memory even though that component has been re-rendered countless times */}
+      {isOpen && (
+        <div className="steps">
+          <div className="numbers">
+            <div className={step >= 1 ? "active" : ""}>1</div>
+            <div className={step >= 2 ? "active" : ""}>2</div>
+            <div className={step >= 3 ? "active" : ""}>3</div>
+          </div>
 
-      <p className="message">
-        Step {step}: {messages[step - 1]}
-      </p>
+          <p className="message">
+            Step {step}: {messages[step - 1]}
+          </p>
 
-      <div className="buttons">
-        {/* adding listeners */}
-        <button
-          style={{ backgroundColor: "#7950f2", color: "#fff" }}
-          onClick={handlePrevious}
-          //notice here we are just passing the function value so we are not calling it because if we would be calling it then it would get executed immediately
+          <div className="buttons">
+            {/* adding listeners */}
+            <button
+              style={{ backgroundColor: "#7950f2", color: "#fff" }}
+              onClick={handlePrevious}
+              //notice here we are just passing the function value so we are not calling it because if we would be calling it then it would get executed immediately
 
-          // onMouseEnter={() => alert("TEST")}
-          //when the App component will be executed it will read the onMouseEnter and just like javascript we provided the callback so this callback function will wait for the event to happen to execute it's functionality
-        >
-          Previous
-        </button>
-        <button
-          style={{ backgroundColor: "#7950f2", color: "#fff" }}
-          onClick={handleNext}
-        >
-          Next
-        </button>
-      </div>
+              // onMouseEnter={() => alert("TEST")}
+              //when the App component will be executed it will read the onMouseEnter and just like javascript we provided the callback so this callback function will wait for the event to happen to execute it's functionality
+            >
+              Previous
+            </button>
+            <button
+              style={{ backgroundColor: "#7950f2", color: "#fff" }}
+              onClick={handleNext}
+            >
+              Next
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
