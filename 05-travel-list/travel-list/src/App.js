@@ -37,6 +37,10 @@ export default function App() {
     );
   }
 
+  function handleClearList() {
+    setItems([]);
+  }
+
   return (
     <div className="app">
       <Logo />
@@ -45,6 +49,7 @@ export default function App() {
         items={items}
         onDeleteItem={handleDeleteItems}
         onToggleItem={handleToggleItem}
+        onClearList={handleClearList}
       />
       <Stats items={items} />
     </div>
@@ -125,7 +130,7 @@ function Form({ onAddItems }) {
 //2. then we use that piece of state on the element that we want to control so we basically force the element to always take the value of this state variable
 //3. and then finally ofcourse, we need to update that state variable and we do so here with the onChange handler where then we set the description to the current value of that input field and so with this it is now the react who is in charge of the state and really of the entire element and so that's the reason why this technique is called controlled element
 
-function PackingList({ items, onDeleteItem, onToggleItem }) {
+function PackingList({ items, onDeleteItem, onToggleItem, onClearList }) {
   const [sortBy, setSortBy] = useState("input");
 
   let sortedItems;
@@ -160,6 +165,7 @@ function PackingList({ items, onDeleteItem, onToggleItem }) {
           <option value="description">Sort by description</option>
           <option value="packed">Sort by packed status</option>
         </select>
+        <button onClick={onClearList}>Clear list</button>
       </div>
     </div>
   );
