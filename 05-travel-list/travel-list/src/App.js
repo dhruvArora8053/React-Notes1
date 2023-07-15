@@ -126,10 +126,24 @@ function Form({ onAddItems }) {
 //3. and then finally ofcourse, we need to update that state variable and we do so here with the onChange handler where then we set the description to the current value of that input field and so with this it is now the react who is in charge of the state and really of the entire element and so that's the reason why this technique is called controlled element
 
 function PackingList({ items, onDeleteItem, onToggleItem }) {
+  const [sortBy, setSortBy] = useState("input");
+
+  let sortedItems;
+
+  if (sortBy === "input") sortedItems = items;
+  if (sortBy === "description")
+    sortedItems = items
+      .slice()
+      .sort((a, b) => a.description.localeCompare(b.description));
+  if (sortBy === "packed")
+    sortedItems = items
+      .slice()
+      .sort((a, b) => Number(a.packed) - Number(b.packed));
+
   return (
     <div className="list">
       <ul>
-        {items.map((item) => (
+        {sortedItems.map((item) => (
           <Item
             item={item}
             onDeleteItem={onDeleteItem}
@@ -141,7 +155,7 @@ function PackingList({ items, onDeleteItem, onToggleItem }) {
 
       {/* sorting */}
       <div className="actions">
-        <select>
+        <select value={sortBy} onChange={(e) => setSortBy(e.target.value)}>
           <option value="input">Sort by input order</option>
           <option value="description">Sort by description</option>
           <option value="packed">Sort by packed status</option>
