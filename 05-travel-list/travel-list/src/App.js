@@ -9,8 +9,20 @@ import { useState } from "react";
 export default function App() {
   const [items, setItems] = useState([]);
 
+  //derived states
+  //we should not do this
+  // const [numItems, setNumItems] = useState(0);
+  //now the problem with this now we have to update state of numItems, so whenever for ex one new item is added besides setting the items we also need to make sure to increase the number here:
+
+  //instead, should do this:
+  // const numItems = items.length;
+  //so this works because as soon as the items are updated, so as soon as the items piece of state is updated the component will rerender and when the component rerenders that means that the function here is called again and therefore then this piece of code here will run again
+
   function handleAddItems(item) {
     setItems((items) => [...items, item]);
+    //should not do this
+    // setNumItems((num) => num + 1);
+    //so with this we would ensure that these two pieces of state stay in sync, but this is ofcourse a lot of additional work that we might forget to do and also it can cause multiple rerenders where atleas one of them here in unecessary
   }
 
   function handleDeleteItems(id) {
@@ -34,7 +46,7 @@ export default function App() {
         onDeleteItem={handleDeleteItems}
         onToggleItem={handleToggleItem}
       />
-      <Stats />
+      <Stats items={items} />
     </div>
   );
 }
@@ -148,10 +160,26 @@ function Item({ item, onDeleteItem, onToggleItem }) {
   );
 }
 
-function Stats() {
+function Stats({ items }) {
+  if (!items.length)
+    return (
+      <p className="stats">
+        <em>Start adding some items to your packing list 🚀</em>
+      </p>
+    );
+
+  const numItems = items.length;
+  const numPacked = items.filter((item) => item.packed).length;
+  const percentage = Math.round((numPacked / numItems) * 100);
+
   return (
     <footer className="stats">
-      <em>👜 You have X items on your list, and you already packed X (X%)</em>
+      <em>
+        {percentage === 100
+          ? "You got everything ready to go!"
+          : ` 👜 You have ${numItems} items on your list, and you already packed
+        ${numPacked} (${percentage}%)`}
+      </em>
     </footer>
   );
 }
