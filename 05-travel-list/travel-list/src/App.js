@@ -1,17 +1,39 @@
 import { useState } from "react";
 
-const initialItems = [
-  { id: 1, description: "Passports", quantity: 2, packed: false },
-  { id: 2, description: "Socks", quantity: 12, packed: true },
-  { id: 3, description: "Charger", quantity: 1, packed: false },
-];
+// const initialItems = [
+//   { id: 1, description: "Passports", quantity: 2, packed: false },
+//   { id: 2, description: "Socks", quantity: 12, packed: true },
+//   { id: 3, description: "Charger", quantity: 1, packed: false },
+// ];
 
 export default function App() {
+  const [items, setItems] = useState([]);
+
+  function handleAddItems(item) {
+    setItems((items) => [...items, item]);
+  }
+
+  function handleDeleteItems(id) {
+    setItems((items) => items.filter((item) => item.id !== id));
+  }
+
+  function handleToggleItem(id) {
+    setItems((items) =>
+      items.map((item) =>
+        item.id === id ? { ...item, packed: !item.packed } : item
+      )
+    );
+  }
+
   return (
     <div className="app">
       <Logo />
-      <Form />
-      <PackingList />
+      <Form onAddItems={handleAddItems} />
+      <PackingList
+        items={items}
+        onDeleteItem={handleDeleteItems}
+        onToggleItem={handleToggleItem}
+      />
       <Stats />
     </div>
   );
@@ -21,16 +43,17 @@ function Logo() {
   return <h1>🌴 Far Away 💼</h1>;
 }
 
-function Form() {
+function Form({ onAddItems }) {
   const [description, setDescription] = useState("");
   const [quantity, setQuantity] = useState(1);
 
-  const [items, setItems] = useState([]);
   //look at the flowchart
+  // const [items, setItems] = useState([]);
+  //now we need to pass this state to the packingList component but the problem is form is not the parent of packingList so therefore we cannot use props, so how do we pass this state to the packingList component, for that we are going to use lift up state: so basically what that means is that whenever multiple sibling components need access to the same state we move that piece of state up to the first common parent component which again in our case is the App component
 
-  function handleAddItems(item) {
-    setItems((items) => [...items, item]);
-  }
+  // function handleAddItems(item) {
+  //   setItems((items) => [...items, item]);
+  // }
   //we cannot use push in above callback function because that would mutate the state and the react is all about immutability, so instead we would be needing to create a whole new array
 
   function handleSubmit(event) {
@@ -46,7 +69,7 @@ function Form() {
     const newItem = { description, quantity, packed: false, id: Date.now() };
     console.log(newItem);
 
-    handleAddItems(newItem);
+    onAddItems(newItem);
 
     //getting to intial state after submitting the forms
     setDescription("");
@@ -85,30 +108,42 @@ function Form() {
   );
 }
 
-// so just to recap the technique of controlled eelments:
+// so just to recap the technique of controlled elements:
 //1. we define a piece of state like above the description and quantity
 //2. then we use that piece of state on the element that we want to control so we basically force the element to always take the value of this state variable
 //3. and then finally ofcourse, we need to update that state variable and we do so here with the onChange handler where then we set the description to the current value of that input field and so with this it is now the react who is in charge of the state and really of the entire element and so that's the reason why this technique is called controlled element
 
-function PackingList() {
+function PackingList({ items, onDeleteItem, onToggleItem }) {
   return (
     <div className="list">
       <ul>
-        {initialItems.map((item) => (
-          <Item item={item} key={item.id} />
+        {items.map((item) => (
+          <Item
+            item={item}
+            onDeleteItem={onDeleteItem}
+            onToggleItem={onToggleItem}
+            key={item.id}
+          />
         ))}
       </ul>
     </div>
   );
 }
 
-function Item({ item }) {
+function Item({ item, onDeleteItem, onToggleItem }) {
   return (
     <li>
+      <input
+        type="checkbox"
+        value={item.packed}
+        onChange={() => onToggleItem(item.id)}
+      />
+      {/* basically we also want to transform this element right here into a controlled element and remember a controlled element means that the element has the value defined by some state and it also has an event handler which listens for the change and updates the state accordingly */}
+
       <span style={item.packed ? { textDecoration: "line-through" } : {}}>
         {item.quantity} {item.description}
       </span>
-      <button>❌</button>
+      <button onClick={() => onDeleteItem(item.id)}>❌</button>
     </li>
   );
 }
