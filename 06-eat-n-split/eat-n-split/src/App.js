@@ -21,29 +21,12 @@ const initialFriends = [
   },
 ];
 
-function Button({ children }) {
-  return (
-    <button className="button" onClick={onclick}>
-      {children}
-    </button>
-  );
-}
-
 export default function App() {
-  const [showAddFriend, setShowAddFriend] = useState(false);
-
-  function handleShowAddFriend() {
-    setShowAddFriend((show) => !show);
-  }
-
   return (
     <div className="app">
       <div className="sidebar">
         <FriendsList />
-        {showAddFriend && <FormAddFriend />}
-        <Button onClick={handleShowAddFriend}>Add friend</Button>
       </div>
-      <FormSplitBill />
     </div>
   );
 }
@@ -54,36 +37,12 @@ function FriendsList() {
   return (
     <ul>
       {friends.map((friend) => (
-        <Friend friend={friend} key={friend.id} />
+        <Friend friend={friend} />
       ))}
     </ul>
   );
 }
 
 function Friend({ friend }) {
-  return (
-    <li>
-      <img src={friend.image} alt={friend.name} />
-      <h3>{friend.name}</h3>
-
-      {friend.balance < 0 && (
-        <p className="red">
-          You owe {friend.name} {Math.abs(friend.balance)}$
-        </p>
-      )}
-
-      {friend.balance > 0 && (
-        <p className="green">
-          {friend.name} owes you {Math.abs(friend.balance)}$
-        </p>
-      )}
-
-      {friend.balance === 0 && (
-        <p className="red">You and {friend.name} are even</p>
-      )}
-
-      <Button>Select</Button>
-    </li>
-  );
+  return <li>{friend.name}</li>;
 }
-
