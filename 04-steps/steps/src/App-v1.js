@@ -80,12 +80,16 @@ export default function App() {
 
           <div className="buttons">
             {/* adding listeners */}
-            <Button
-              bgColor="#7950f2"
-              textColor="#fff"
+            <button
+              style={{ backgroundColor: "#7950f2", color: "#fff" }}
               onClick={handlePrevious}
-              text="Previous"
-            />
+              //notice here we are just passing the function value so we are not calling it because if we would be calling it then it would get executed immediately
+
+              // onMouseEnter={() => alert("TEST")}
+              //when the App component will be executed it will read the onMouseEnter and just like javascript we provided the callback so this callback function will wait for the event to happen to execute it's functionality
+            >
+              Previous
+            </button>
             <button
               style={{ backgroundColor: "#7950f2", color: "#fff" }}
               onClick={handleNext}
@@ -96,16 +100,5 @@ export default function App() {
         </div>
       )}
     </>
-  );
-}
-
-function Button({ textColor, bgColor, onClick, text }) {
-  return (
-    <button
-      style={{ backgroundColor: bgColor, color: textColor }}
-      onClick={onclick}
-    >
-      {text}
-    </button>
   );
 }
