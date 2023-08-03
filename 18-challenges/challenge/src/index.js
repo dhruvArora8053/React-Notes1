@@ -10,58 +10,48 @@ root.render(
 );
 
 function App() {
-  const [bill, setBill] = useState("");
-  const [tip, setTip] = useState("");
-
-  return (
-    <>
-      <TotalBill bill={bill} setBill={setBill} />
-      <ServiceRating>How did you like the service?</ServiceRating>
-      <ServiceRating>How did your friend like the service?</ServiceRating>
-      <TotalPayment bill={bill} />
-    </>
-  );
+  return <TipCalculator />;
 }
 
-function TotalBill({ bill, setBill }) {
+function TipCalculator() {
   return (
-    <div className="flex">
-      <h3>How much was the bill?</h3>
-      <input
-        type="text"
-        placeholder="Bill..."
-        value={bill}
-        onChange={(e) => {
-          setBill(e.target.value);
-        }}
-      />
+    <div>
+      <BillInput />
+      <SelectPercentage>How did your like the service?</SelectPercentage>
+      <SelectPercentage>How did your friend like the service</SelectPercentage>
+      <Output />
+      <Reset />
     </div>
   );
 }
 
-function ServiceRating({ children }) {
+function BillInput() {
   return (
-    <div className="flex">
-      <h3>{children}</h3>
-      <select >
+    <div>
+      <label>How much was the bill?</label>
+      <input type="text" placeholder="Bill value" />
+    </div>
+  );
+}
+
+function SelectPercentage({ children }) {
+  return (
+    <div>
+      <label>{children}</label>
+      <select>
         <option value="0">Dissatisfied (0%)</option>
-        <option value="5">It was okay (5%)</option>
-        <option value="10">It was good(10%)</option>
-        <option value="20">Absolutely amazing! (20%)</option>
+        <option value="5">It was ok (5%)</option>
+        <option value="10">It was good (10%)</option>
+        <option value="20">Absolutely Amazing! (20%)</option>
       </select>
     </div>
   );
 }
 
-function TotalPayment({ bill, tip }) {
-  const fullPay = bill + tip;
+function Output() {
+  return <h3>You pay X ($A + $B for the tip)</h3>;
+}
 
-  return (
-    <div>
-      <h2>
-        You pay ${fullPay} (${bill}+${tip})
-      </h2>
-      <button>Reset</button>
-    </div>
-  );
+function Reset() {
+  return <button>Reset</button>;
 }
