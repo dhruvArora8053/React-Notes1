@@ -10,14 +10,15 @@ root.render(
 );
 
 function App() {
-  const [bill, setBill] = useState(0);
+  const [bill, setBill] = useState("");
+  const [tip, setTip] = useState("");
 
   return (
     <>
       <TotalBill bill={bill} setBill={setBill} />
       <ServiceRating>How did you like the service?</ServiceRating>
       <ServiceRating>How did your friend like the service?</ServiceRating>
-      <TotalPayment />
+      <TotalPayment bill={bill} />
     </>
   );
 }
@@ -42,7 +43,7 @@ function ServiceRating({ children }) {
   return (
     <div className="flex">
       <h3>{children}</h3>
-      <select>
+      <select >
         <option value="0">Dissatisfied (0%)</option>
         <option value="5">It was okay (5%)</option>
         <option value="10">It was good(10%)</option>
