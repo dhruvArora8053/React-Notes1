@@ -39,7 +39,7 @@ export default function App() {
 
   function handleAddFriend(friend) {
     setFriends((friends) => [...friends, friend]);
-    setShowAddFriend(false);
+    setShowAddFriend(false)
   }
 
   return (
@@ -160,3 +160,4 @@ function FormSplitBill() {
     </form>
   );
 }
+
