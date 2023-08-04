@@ -44,11 +44,7 @@ export default function App() {
         <Button onClick={handleShowAddFriend}>
           {showAddFriend ? "Close" : " Add friend"}
         </Button>
-      </div>
-
-      <FormSplitBill />
-    </div>
-  );
+)
 }
 
 function FriendsList() {
